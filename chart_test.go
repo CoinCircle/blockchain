@@ -8,7 +8,7 @@ import (
 func TestGetChart(t *testing.T) {
 	fmt.Println("===== TESTING CHART =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetChart("total-bitcoins")
 	if e != nil {
 		fmt.Print(e)

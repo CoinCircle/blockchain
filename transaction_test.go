@@ -8,7 +8,7 @@ import (
 func TestGetTransaction(t *testing.T) {
 	fmt.Println("===== TESTING TRANSACTION =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetTransaction("b6f6991d03df0e2e04dafffcd6bc418aac66049e2cd74b80f14ac86db1e3f0da")
 	if e != nil {
 		fmt.Print(e)
@@ -25,7 +25,7 @@ func TestGetTransaction(t *testing.T) {
 func TestGetUnconfirmedTransactions(t *testing.T) {
 	fmt.Println("===== TESTING UNCONFIRMED TRANSACTION =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetUnconfirmedTransactions()
 	if e != nil {
 		fmt.Print(e)

@@ -8,17 +8,28 @@ import (
 )
 
 const (
-	API_ROOT = "https://blockchain.info"
+	API_ROOT         = "https://blockchain.info"
+	TESTNET_API_ROOT = "https://testnet.blockchain.info"
 )
+
+type Options struct {
+	UseTestnet bool
+}
 
 type Client struct {
 	*http.Client
+	options *Options
 }
 
 func (c *Client) loadResponse(path string, i interface{}, formatJson bool) error {
-	full_path := API_ROOT + path
+	var apiRoot = API_ROOT
+	if c.options.UseTestnet {
+		apiRoot = TESTNET_API_ROOT
+	}
+
+	full_path := apiRoot + path
 	if formatJson {
-		full_path = API_ROOT + path + "?format=json"
+		full_path = apiRoot + path + "?format=json"
 	}
 
 	fmt.Println("querying..." + full_path)
@@ -40,6 +51,9 @@ func (c *Client) loadResponse(path string, i interface{}, formatJson bool) error
 	return json.Unmarshal(b, &i)
 }
 
-func New() (*Client, error) {
-	return &Client{Client: &http.Client{}}, nil
+func New(opts *Options) (*Client, error) {
+	return &Client{
+		Client:  &http.Client{},
+		options: opts,
+	}, nil
 }

@@ -8,7 +8,7 @@ import (
 func TestGetBlock(t *testing.T) {
 	fmt.Println("===== TESTING BLOCK =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetBlock("0000000000000bae09a7a393a8acded75aa67e46cb81f7acaa5ad94f9eacd103")
 	if e != nil {
 		fmt.Print(e)
@@ -27,7 +27,7 @@ func TestGetBlock(t *testing.T) {
 func TestGetBlockHeight(t *testing.T) {
 	fmt.Println("===== TESTING BLOCK HEIGHT =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetBlockHeight("160778")
 	if e != nil {
 		fmt.Print(e)
@@ -42,7 +42,7 @@ func TestGetBlockHeight(t *testing.T) {
 func TestGetLatestBlock(t *testing.T) {
 	fmt.Println("===== TESTING LATEST BLOCK =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetLatestBlock()
 	if e != nil {
 		fmt.Print(e)

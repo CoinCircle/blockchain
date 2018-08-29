@@ -8,7 +8,7 @@ import (
 func TestGetAddress(t *testing.T) {
 	fmt.Println("===== TESTING ADDRESS =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	resp, e := c.GetAddress("162FjqU7RYdojnejCDe6zrPDUpaLcv9Hhq")
 	if e != nil {
 		fmt.Print(e)
@@ -34,7 +34,7 @@ func TestGetAddress(t *testing.T) {
 func TestGetAddresses(t *testing.T) {
 	fmt.Println("===== TESTING ADDRESSES =====")
 
-	c, e := New()
+	c, e := New(&Options{UseTestnet: false})
 	if e != nil {
 		fmt.Print(e)
 	}
