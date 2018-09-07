@@ -1,6 +1,9 @@
 package blockchain
 
-import "testing"
+import (
+	"net"
+	"testing"
+)
 
 // Test recovery from a 504 timeout error
 func TestRecoverFrom504(t *testing.T) {
@@ -16,9 +19,11 @@ func TestRecoverFrom504(t *testing.T) {
 	if e != nil {
 		t.Log(e)
 	}
-	// This line won't execute if it can't recover
-	a := 1
-	if a != 1 {
-		t.Fatal("Test failed")
+
+	if e, ok := err.(net.Error); ok && e.Timeout() {
+		// This was a timeout success
+	} else if err != nil {
+		// This was an error, but not a timeout
+		t.Fail()
 	}
 }
