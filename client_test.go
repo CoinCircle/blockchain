@@ -1,7 +1,7 @@
 package blockchain
 
 import (
-	"net"
+	"strings"
 	"testing"
 )
 
@@ -17,12 +17,13 @@ func TestRecoverFrom504(t *testing.T) {
 	rsp := &Block{}
 	e := c.loadResponse("/504?sleep=15000", rsp, false)
 	if e != nil {
-		t.Log(e)
+		t.Log(e.Error())
 	}
 
-	if e, ok := err.(net.Error); ok && e.Timeout() {
+	if strings.Index(e.Error(), "Client.Timeout exceeded") > 0 {
 		// This was a timeout success
-	} else if err != nil {
+		t.Log("Got timeout error")
+	} else {
 		// This was an error, but not a timeout
 		t.Fail()
 	}
