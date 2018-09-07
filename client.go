@@ -15,6 +15,7 @@ const (
 
 type Options struct {
 	UseTestnet bool
+	APIRoot    string
 }
 
 type Client struct {
@@ -26,6 +27,9 @@ func (c *Client) loadResponse(path string, i interface{}, formatJson bool) error
 	var apiRoot = API_ROOT
 	if c.options.UseTestnet {
 		apiRoot = TESTNET_API_ROOT
+	}
+	if c.options.APIRoot != "" {
+		apiRoot = c.options.APIRoot
 	}
 
 	full_path := apiRoot + path

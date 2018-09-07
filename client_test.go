@@ -6,12 +6,13 @@ import "testing"
 func TestRecoverFrom504(t *testing.T) {
 	c, err := New(&Options{
 		UseTestnet: true,
+		APIRoot:    "https://httpstat.us",
 	})
 	if err != nil {
 		t.Fatal(err)
 	}
 	rsp := &Block{}
-	e := c.loadResponse("https://httpstat.us/504", rsp, false)
+	e := c.loadResponse("/504?sleep=15000", rsp, false)
 	if e != nil {
 		t.Log(e)
 	}
