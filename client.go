@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 const (
@@ -53,7 +54,9 @@ func (c *Client) loadResponse(path string, i interface{}, formatJson bool) error
 
 func New(opts *Options) (*Client, error) {
 	return &Client{
-		Client:  &http.Client{},
+		Client: &http.Client{
+			Timeout: time.Second * 10,
+		},
 		options: opts,
 	}, nil
 }
