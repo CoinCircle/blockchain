@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -15,6 +16,7 @@ const (
 
 type Options struct {
 	UseTestnet bool
+	APIKey     string
 	APIRoot    string
 }
 
@@ -28,13 +30,18 @@ func (c *Client) loadResponse(path string, i interface{}, formatJson bool) error
 	if c.options.UseTestnet {
 		apiRoot = TESTNET_API_ROOT
 	}
-	if c.options.APIRoot != "" {
-		apiRoot = c.options.APIRoot
-	}
+
+	var queryparams []string
+
+	queryparams = append(queryparams, fmt.Sprintf("api_code=%s", c.options.APIKey))
 
 	full_path := apiRoot + path
 	if formatJson {
-		full_path = apiRoot + path + "?format=json"
+		queryparams = append(queryparams, "format=json")
+	}
+
+	if len(queryparams) > 0 {
+		full_path = full_path + "?" + strings.Join(queryparams, "&")
 	}
 
 	fmt.Println("querying..." + full_path)
